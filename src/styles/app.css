@@ -1,9 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #f57c00;
+  font-family: "Roboto", sans-serif;
+}
+
 body {
   background-color: #121212;
   width: 100vw;
   min-height: 100vh;
+  display: flex;
+  flex: 1;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
+
 h1 {
-  color: #f57c00;
-  font-family: "Roboto", sans-serif;
+  font-size: 3vw;
+  flex: 1;
+}
+
+h2 {
+  font-size: 2vw;
+}
+
+#root {
+  display: flex;
+  flex: 1;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#gameBox {
+  width: 85vw;
+  height: 85vh;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+#gameHeader {
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#statDiv {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-content: space-around;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 30px;
+}
+
+#board {
+  display: flex;
+  flex: 1;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cell {
+  width: 7.5vh;
+  height: 7.5vh;
+}
+
+.cell:nth-child(2n+2) {
+  border-left: 2px solid #7575757a;
+  border-right: 2px solid #7575757a;
 }
