@@ -2,6 +2,7 @@ import "./styles/app.css";
 import C from "./constants/index";
 import CreateHtml from "./Components/CreateHtml";
 import Board from "./Components/Board";
+import Game from "./script/Game";
 
 //When site content is loaded
 window.onload = () => {
@@ -12,8 +13,6 @@ window.onload = () => {
   CreateHtml();
 
   //Creating the board
-  Board();
-
-  let BD = C.BoardData();
-  console.log(BD);
+  let GB = new Board();
+  let GA = new Game();
 };
