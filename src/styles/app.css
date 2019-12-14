@@ -1,0 +1,9 @@
+body {
+  background-color: #121212;
+  width: 100vw;
+  min-height: 100vh;
+}
+h1 {
+  color: #f57c00;
+  font-family: "Roboto", sans-serif;
+}
