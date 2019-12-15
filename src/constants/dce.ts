@@ -1,4 +1,4 @@
 //Short for document create element
-const dce: Function = (element: string) => document.createElement(element);
+const dce = (element: string): HTMLElement => document.createElement(element);
 
 export default dce;

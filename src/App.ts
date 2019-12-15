@@ -14,5 +14,6 @@ window.onload = () => {
 
   //Creating the board
   let GB = new Board();
-  let GA = new Game();
+  let BD = GB.getBD();
+  let GA = new Game(BD);
 };

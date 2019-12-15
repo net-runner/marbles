@@ -35,7 +35,7 @@ h2 {
 
 #gameBox {
   width: 85vw;
-  height: 85vh;
+  height: 90vh;
   background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -124,4 +124,27 @@ h2 {
 #nextTurn>.cell:nth-child(3) {
   border-top: 2px solid #7575757a;
   border-bottom: 2px solid #7575757a;
+}
+
+.open {
+  background-color: #121212;
+}
+
+.closed {
+  background-color: rgba(255, 255, 255, 0.027);
+}
+
+.pathInfo {
+  position: absolute;
+  color: #000;
+  font-size: 3vw;
+  align-self: center;
+}
+
+.obstacle {
+  background-color: rgba(255, 0, 0, 0.294);
+}
+
+.path {
+  background-color: #fff;
 }
