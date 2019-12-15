@@ -3,17 +3,8 @@ import gei from "../constants/gei";
 import rc from "../constants/rancords";
 import C from "../constants/index";
 import findWay from "./Pathfinding";
-interface Spot {
-  color?: string;
-}
-interface point {
-  x: number;
-  y: number;
-  obstacle?: boolean;
-}
-interface DivTarget extends EventTarget {
-  target: HTMLElement;
-}
+import { Spot, point } from "../constants/interfaces";
+
 export default class Game {
   BDHE: HTMLElement[][];
   BD: Array<Array<Spot>>;
@@ -38,6 +29,7 @@ export default class Game {
     this.createBalls(colors);
     this.updateStats(colors, colors2);
     this.handleHover();
+    this.handledivClick();
     document.addEventListener("keyup", e => {
       if (e.key === "w") {
         this.showPath = !this.showPath;
@@ -103,7 +95,27 @@ export default class Game {
       this.selected = target;
     }
   };
-  divClick = (): void => {};
+  handledivClick = (): void => {
+    const targetur = gei("board");
+    const targety = targetur.getElementsByClassName("cell");
+    Array.from(targety).map((item, index) => {
+      item.addEventListener("click", e => {
+        if (this.selected) {
+          const freeSpot = findWay(
+            this.startPoint,
+            this.PB,
+            this.endPoint,
+            this.showPath
+          );
+          if (freeSpot) {
+            const aidi = this.selected.split(".");
+            const target = gei(aidi[0] + "." + aidi[1]);
+            console.log(target);
+          }
+        }
+      });
+    });
+  };
   handleHover = (): void => {
     const targetur = gei("board");
     const targety = targetur.getElementsByClassName("cell");

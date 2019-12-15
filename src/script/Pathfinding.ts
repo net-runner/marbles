@@ -1,17 +1,7 @@
 import gei from "../constants/gei";
 import dce from "../constants/dce";
+import { point, Anode } from "../constants/interfaces";
 
-interface point {
-  x: number;
-  y: number;
-  obstacle?: boolean;
-}
-interface Anode {
-  x: number;
-  y: number;
-  f: number | undefined;
-  parent?: Anode;
-}
 const findWay = (
   start: point,
   nodelist: point[][],
@@ -37,6 +27,9 @@ const findWay = (
     const current = lowest_f(open);
     open.splice(open.indexOf(current), 1);
     closed.push(current);
+    if (!current) {
+      return 0;
+    }
     if (current.x === end.x && current.y === end.y) {
       return 1;
     }
