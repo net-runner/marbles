@@ -6,46 +6,64 @@ const findWay = (
   start: point,
   nodelist: point[][],
   end: point,
-  showPath: boolean
+  showPath: boolean,
+  using?: string
 ): boolean => {
   let open: Anode[] = [];
   let closed: Anode[] = [];
   let obstacles: point[] = [];
   let path: point[] = [];
+
+  //Type safechecks
+  if (!start) {
+    return false;
+  }
+  if (!end) {
+    return false;
+  }
   const start_node: Anode = {
     x: start.x,
     y: start.y,
+    depth: 0,
     f: 0
   };
 
   open.push(start_node);
 
   const Astara = (counter?: number): number => {
-    if (counter === 500) {
+    if (open.length === 0) {
       return 0;
     }
     const current = lowest_f(open);
     open.splice(open.indexOf(current), 1);
     closed.push(current);
-    if (!current) {
-      return 0;
-    }
+    if (end.obstacle) return 0;
+    if (!current) return 0;
     if (current.x === end.x && current.y === end.y) {
       return 1;
     }
     const neighbours = getNeighbours(nodelist, current);
 
     neighbours.map((neighbour, index) => {
-      const new_cost =
-        heuristic(
-          { x: start_node.x, y: start_node.y },
-          { x: neighbour.x, y: neighbour.y }
-        ) +
-        heuristic({ x: neighbour.x, y: neighbour.y }, { x: end.x, y: end.y });
+      let new_cost;
+      if (using === "best-first") {
+        new_cost = heuristic(
+          { x: neighbour.x, y: neighbour.y },
+          { x: end.x, y: end.y }
+        );
+      } else {
+        new_cost =
+          heuristic(
+            { x: start_node.x, y: start_node.y },
+            { x: neighbour.x, y: neighbour.y }
+          ) +
+          heuristic({ x: neighbour.x, y: neighbour.y }, { x: end.x, y: end.y });
+      }
 
       let freshAnode: Anode = {
         x: neighbour.x,
         y: neighbour.y,
+        depth: counter + 1,
         f: 0
       };
 
@@ -62,6 +80,7 @@ const findWay = (
       let openIndex;
       for (let i = 0; i < open.length; i++) {
         if (freshAnode.x === open[i].x && freshAnode.y === open[i].y) {
+          freshAnode.f = open[i].f;
           isOpen = true;
           openIndex = i;
         }
@@ -70,7 +89,7 @@ const findWay = (
       //Finishing touches
       if (!neighbour.obstacle && !isClosed) {
         if (isOpen) {
-          if (new_cost <= freshAnode.f) {
+          if (new_cost < freshAnode.f) {
             freshAnode.f = new_cost;
             freshAnode.parent = current;
             open[openIndex] = freshAnode;
@@ -191,7 +210,7 @@ const lowest_f = (open: Anode[]): Anode => {
   let lowestAnode: Anode;
   lowestAnode = open[0];
   open.map((item, index) => {
-    if (item.f < lowestAnode.f) {
+    if (item.f <= lowestAnode.f) {
       lowestAnode = item;
     }
   });

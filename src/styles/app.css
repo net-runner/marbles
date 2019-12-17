@@ -3,6 +3,7 @@
   padding: 0;
   color: #f57c00;
   font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
 }
 
 body {
@@ -23,6 +24,11 @@ h1 {
 
 h2 {
   font-size: 2vw;
+}
+
+.plotki {
+  border-width: 2px;
+  border-style: solid;
 }
 
 #root {
