@@ -15,16 +15,16 @@ const CreateHtml: Function = () => {
 
   //Game title
   const h1: HTMLElement = dce("h1");
-  h1.innerText = "Kulki";
+  h1.innerText = "Marbles";
   gameHeader.appendChild(h1);
 
   //Statdiv
   const statDiv: HTMLElement = dce("div");
   const h2_1: HTMLElement = dce("h2");
   const h2_2: HTMLElement = dce("h2");
-  h2_1.innerText = "Runda: 1";
+  h2_1.innerText = "Round: 1";
   h2_1.id = "rounds";
-  h2_2.innerText = "Wynik: 0";
+  h2_2.innerText = "Score: 0";
   h2_2.id = "score";
   statDiv.id = "statDiv";
   statDiv.appendChild(h2_1);
@@ -40,7 +40,7 @@ const CreateHtml: Function = () => {
   //This turn
   const thisTurn: HTMLElement = dce("div");
   const h2_3: HTMLElement = dce("h2");
-  h2_3.innerText = "Ta runda";
+  h2_3.innerText = "This round";
   h2_3.style.marginBottom = "30px";
   thisTurn.appendChild(h2_3);
   thisTurn.id = "thisTurn";
@@ -61,7 +61,7 @@ const CreateHtml: Function = () => {
   const nextTurn: HTMLElement = dce("div");
   nextTurn.id = "nextTurn";
   const h2_4: HTMLElement = dce("h2");
-  h2_4.innerText = "Nastepna";
+  h2_4.innerText = "Next round";
   h2_4.style.marginBottom = "30px";
   nextTurn.appendChild(h2_4);
   nextTurn.id = "nextTurn";

@@ -68,10 +68,10 @@ export default class Game {
   updateStats = (c1: string[], c2: string[]): void => {
     this.turn = this.turn + 1;
     const turnDiv = gei("rounds");
-    turnDiv.innerHTML = "Runda: " + this.turn;
+    turnDiv.innerHTML = "Round: " + this.turn;
 
     const scoreDiv = gei("score");
-    scoreDiv.innerHTML = "Wynik: " + this.score;
+    scoreDiv.innerHTML = "Score: " + this.score;
     this.updateLeft(c1);
     this.updateRight(c2);
   };
@@ -277,7 +277,7 @@ export default class Game {
           cell.removeEventListener("click", this.handledivClick);
         });
       });
-      if (window.confirm(`Porażka po ${this.turn} turach. Jescze raz?`)) {
+      if (window.confirm(`Lost after ${this.turn} rounds. One more?`)) {
         this.BDHE.map((row, index) => {
           row.map((cell, indexor) => (cell.innerHTML = ""));
         });
