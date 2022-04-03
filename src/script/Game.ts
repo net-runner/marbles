@@ -4,6 +4,7 @@ import rc from "../constants/rancords";
 import C from "../constants/index";
 import findWay from "./Pathfinding";
 import { Spot, point, ColorPoint } from "../constants/interfaces";
+import gsap from "gsap";
 
 export default class Game {
   BDHE: HTMLElement[][];
@@ -35,7 +36,7 @@ export default class Game {
     this.updateStats(colors, colors2);
     this.handleHover();
     this.handledivClick();
-    document.addEventListener("keyup", e => {
+    document.addEventListener("keyup", (e) => {
       if (e.key === "w") {
         if (!this.awaitingNR) {
           this.showPath = !this.showPath;
@@ -82,6 +83,7 @@ export default class Game {
       divka.className = "sphere";
       divka.style.backgroundColor = item;
       sphrBox.appendChild(divka);
+      gsap.from(divka, { duration: 0.7, x: "-75%" });
     });
   };
   updateRight = (colors: string[]): void => {
@@ -92,6 +94,7 @@ export default class Game {
       divka.className = "sphere";
       divka.style.backgroundColor = item;
       sphrBox.appendChild(divka);
+      gsap.from(divka, { duration: 0.7, x: "75%" });
     });
   };
   getColors = (): string[] => {
@@ -146,7 +149,7 @@ export default class Game {
       }
       const nextf = {
         x: start.x - vectr.x * counter,
-        y: start.y - vectr.y * counter
+        y: start.y - vectr.y * counter,
       };
       if (this.BD[nextf.x]) {
         if (this.BD[nextf.x][nextf.y]) {
@@ -170,7 +173,7 @@ export default class Game {
       }
       const nextf = {
         x: start.x + vectr.x * cntr,
-        y: start.y + vectr.y * cntr
+        y: start.y + vectr.y * cntr,
       };
       if (this.BD[nextf.x]) {
         if (this.BD[nextf.x][nextf.y]) {
@@ -205,7 +208,7 @@ export default class Game {
                 neighbours.push({
                   x: i,
                   y: j,
-                  color: targetNode.color
+                  color: targetNode.color,
                 });
               }
             }
@@ -224,14 +227,15 @@ export default class Game {
           const divo = this.BDHE[coords.x][coords.y];
           divo.addEventListener("click", this.handleClick);
           const divka = dce("div");
-          divka.addEventListener("mouseover", e => e.stopPropagation());
+          divka.addEventListener("mouseover", (e) => e.stopPropagation());
           divka.className = "sphere";
           divka.style.backgroundColor = colors[i];
           divo.appendChild(divka);
+          gsap.from(divka, { duration: 0.7, opacity: 0, stagger: 0.1 });
 
           const RP = this.logikumKalkulaturum(colors[i], {
             x: coords.x,
-            y: coords.y
+            y: coords.y,
           });
 
           if (RP) {
@@ -273,7 +277,7 @@ export default class Game {
           cell.removeEventListener("click", this.handledivClick);
         });
       });
-      if (window.confirm(`Poraźka po ${this.turn} turach. Jescze raz?`)) {
+      if (window.confirm(`Porażka po ${this.turn} turach. Jescze raz?`)) {
         this.BDHE.map((row, index) => {
           row.map((cell, indexor) => (cell.innerHTML = ""));
         });
@@ -351,7 +355,7 @@ export default class Game {
     const targetur = gei("board");
     const targety = targetur.getElementsByClassName("cell");
     Array.from(targety).map((item, index) => {
-      item.addEventListener("click", e => {
+      item.addEventListener("click", (e) => {
         if (!this.awaitingNR)
           if (this.selected) {
             if (this.startPoint) {
@@ -366,20 +370,33 @@ export default class Game {
                 if (freeSpot) {
                   //Remove sphere from start
                   const start = this.BDHE[this.startPoint.x][this.startPoint.y];
-                  start.removeEventListener("click", this.handleClick);
-                  start.innerHTML = "";
-                  const clr = this.BD[this.startPoint.x][this.startPoint.y]
-                    .color;
+                  console.log(start);
+                  gsap.to(start.lastChild, {
+                    duration: 0.3,
+                    opacity: 0,
+                    stagger: 0.1,
+                    onComplete: () => {
+                      start.removeEventListener("click", this.handleClick);
+                      start.innerHTML = "";
+                    },
+                  });
+
+                  const clr =
+                    this.BD[this.startPoint.x][this.startPoint.y].color;
                   //Remove color from start point
                   this.BD[this.startPoint.x][this.startPoint.y] = {};
 
                   const target = this.BDHE[this.endPoint.x][this.endPoint.y];
                   target.addEventListener("click", this.handleClick);
                   const divka = dce("div");
-                  divka.addEventListener("mouseover", e => e.stopPropagation());
+                  divka.addEventListener("mouseover", (e) =>
+                    e.stopPropagation()
+                  );
                   divka.className = "sphere";
                   divka.style.backgroundColor = clr;
+
                   target.appendChild(divka);
+                  gsap.from(divka, { duration: 0.7, opacity: 0, stagger: 0.1 });
 
                   //Targeted data cell add color
                   this.BD[this.endPoint.x][this.endPoint.y].color = clr;
@@ -387,7 +404,7 @@ export default class Game {
                   //Checking if there is 5 spheres
                   const RP = this.logikumKalkulaturum(clr, {
                     x: this.endPoint.x,
-                    y: this.endPoint.y
+                    y: this.endPoint.y,
                   });
 
                   //Undefine the starting points
@@ -448,7 +465,7 @@ export default class Game {
     const targetur = gei("board");
     const targety = targetur.getElementsByClassName("cell");
     Array.from(targety).map((item, index) => {
-      item.addEventListener("mouseover", e => {
+      item.addEventListener("mouseover", (e) => {
         const tE = e.target as HTMLElement;
         if (!this.awaitingNR)
           if (this.selected) {
